@@ -1,14 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+const initialState = [
+  [false, false, false, false, false, false],
+  [false, false, true, false, false, false],
+  [false, false, false, true, false, false],
+  [false, true, true, true, false, false],
+  [false, false, false, false, false, false],
+  [false, false, false, false, false, false],
+];
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App initialState={initialState} />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
