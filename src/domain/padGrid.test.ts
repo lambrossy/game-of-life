@@ -1,14 +1,15 @@
+import Grid from "../types/Grid";
 import padGrid from "./padGrid";
 
 describe("domain", () => {
   describe("padGrid", () => {
     test("pad grid with false cells", () => {
-      const grid = [
+      const grid: Grid = [
         [true, false, true],
         [false, true, false],
         [true, false, true],
       ];
-      const result = padGrid(grid);
+      const result: Grid = padGrid(grid);
       expect(result).toEqual([
         [false, false, false, false, false],
         [false, true, false, true, false],

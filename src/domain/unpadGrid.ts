@@ -4,13 +4,22 @@ import last from "lodash/fp/last";
 import initial from "lodash/fp/initial";
 import compose from "lodash/fp/compose";
 import update from "lodash/fp/update";
-import zipAll from "lodash/fp/zipAll";
+import Grid from "../types/Grid";
 
-const transpose = zipAll;
+// https://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
+const transpose = (columns: any[][]) =>
+  columns[0].map((_, colIndex: number) =>
+    columns.map((row: any[]) => row[colIndex])
+  );
+
 const trim = compose(initial, tail);
-const or = (left) => (right) => left || right;
 
-const foldEnds = (list) => {
+const or =
+  (left: boolean = false) =>
+  (right: boolean = false): boolean =>
+    left || right;
+
+const foldEnds = (list: boolean[]): boolean[] => {
   const trimmed = trim(list);
   const lastIndex = trimmed.length - 1;
   const firstToLast = update(lastIndex, or(head(list)), trimmed);
@@ -19,7 +28,7 @@ const foldEnds = (list) => {
 };
 
 // Given a grid, unpads grid and wraps any live cells to the other end of the grid
-const unpadGrid = (grid) => {
+const unpadGrid = (grid: Grid): Grid => {
   const foldColumns = grid.map(foldEnds);
   const foldRows = transpose(foldColumns).map(foldEnds);
   return transpose(foldRows);

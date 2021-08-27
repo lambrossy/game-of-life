@@ -1,15 +1,17 @@
+import Coordinates from "../types/Coordinates";
+import Grid from "../types/Grid";
 import mapGrid from "./mapGrid";
 
 describe("utilities", () => {
   describe("mapGrid", () => {
     test("applies provided function in every cell of grid", () => {
-      const fn = (value, coord) => ({ value, coord });
-      const grid = [
+      const fn = (value: boolean, coord: Coordinates) => ({ value, coord });
+      const grid: Grid = [
         [true, false, true],
         [false, true, false],
         [true, false, true],
       ];
-      const result = mapGrid(fn, grid);
+      const result: Grid = mapGrid(fn, grid);
       expect(result).toEqual([
         [
           { value: true, coord: [0, 0] },

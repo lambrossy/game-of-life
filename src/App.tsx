@@ -1,31 +1,29 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 import update from "lodash/fp/update";
 import styled from "styled-components";
 import run from "./domain/run";
 import mapGrid from "./domain/mapGrid";
+import Cell from "./components/Cell/Cell";
+import CellProps from "./interfaces/CellProps";
+import Coordinates from "./types/Coordinates";
+import Grid from "./types/Grid";
 
 const Controls = styled.div`
   margin: 5px;
 `;
 
-const Cell = styled.div`
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  margin: 5px;
-  border: 1px solid grey;
-  background: ${(props) => (props.alive ? "lightslategrey" : "lightgray")};
-  cursor: pointer;
-`;
-
-const appCellToViewCell = (value, [y, x]) => ({
+const appCellToViewCell = (value: boolean, [y, x]: Coordinates): CellProps => ({
   alive: value,
   key: `${y}-${x}`,
 });
 
-const flip = (bool) => !bool;
+const flip = (bool: boolean): boolean => !bool;
 
-const App = ({ initialState = [] }) => {
+interface Props {
+  initialState: Grid;
+}
+
+const App: FC<Props> = ({ initialState }) => {
   const [state, setState] = useState(initialState);
   const viewState = mapGrid(appCellToViewCell, state);
 
@@ -36,9 +34,9 @@ const App = ({ initialState = [] }) => {
         <button onClick={() => setState(initialState)}>Reset</button>
       </Controls>
       <div>
-        {viewState.map((y, yi) => (
+        {viewState.map((y: CellProps[], yi: number) => (
           <div key={JSON.stringify(y)}>
-            {y.map((x, xi) => (
+            {y.map((x: CellProps, xi: number) => (
               <Cell
                 {...x}
                 data-testid={x.alive ? "alive" : "dead"}
